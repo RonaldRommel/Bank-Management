@@ -1,0 +1,182 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%} {% set loan_types=["Personal Loans","Credit Card Loans","Home Loans","Car
+Loans","Two-Wheeler Loans","Small Business Loans","Payday Loans","Cash
+Advances","Home Renovation Loan","Gold Loan","Education Loan"] %}
+
+<br />
+<h2>Loan</h2>
+<br />
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-12" style="color: green">
+      <div class="account_card">
+        <form method="POST" class="acc_in">
+          <h3>Loan</h3>
+          <div class="container">
+            <br />
+            <div class="form-group">
+                <!-- FullName var=fullName -->
+                <label for="fullName">Full Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Enter first name"
+                  value="{{accDetails[0][1].name}}"
+                  disabled
+                  required
+                />
+              </div>
+              <!-- Phone Number var=phoneNumber -->
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  placeholder="Enter Phone Number"
+                  value="{{accDetails[0][1].phone}}"
+                  disabled
+                  required
+                />
+              </div>
+              <!-- Email Address var=email -->
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Enter email"
+                  value="{{accDetails[0][1].email}}"
+                  required
+                  disabled
+                />
+              </div>
+              <!-- date of birth var=dob -->
+      <div class="form-group">
+        <label for="dob">Date Of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          id="dob"
+          name="dob"
+          max="2004-12-31"
+          value="{{accDetails[0][1].dob}}"
+          disabled
+          required
+        />
+      </div>
+      <!-- Gender var=sex-->
+      <div class="input-group mb-3">
+        <label for="sex">Sex</label>
+        <input class="form-control" id="sex" name="sex" value="{{accDetails[0][1].sex}}"
+        disabled
+        required >
+          
+      </div>
+      <br />
+      <!-- Occupation var=occupation -->
+      <div class="form-group">
+        <label for="occupation">Occupation</label>
+        <input
+          type="text"
+          class="form-control"
+          id="occupation"
+          name="occupation"
+          placeholder="Enter your occupation"
+          value="{{accDetails[0][1].occupation}}"
+          disabled
+          required
+        />
+      </div>
+      <!-- Permanent address var=address -->
+      <div class="form-group">
+        <label for="address">Permanent Address</label>
+        <input
+        type="text"
+          class="form-control"
+          placeholder="Enter Permanent Address"
+          id="address"
+          name="address"
+          value="{{accDetails[0][1].address}}"
+          disabled
+          required/>
+      </div>
+      <br />
+      <!-- Account Type var=accType-->
+      <div class="input-group mb-3">
+        <label for="acctype">Account type</label>
+        <input class="form-control" id="acctype" name="acctype" value="{{accDetails[0][0].account_type}}" 
+        disabled
+        required>
+        
+      </div>
+      <br />
+      <!-- Branch name var=bname-->
+      <div class="input-group mb-3">
+        <label for="bid">Branch</label>
+        <input class="form-control" id="bid" name="bid" value="{{accDetails[0][1].branch_name}}" 
+        disabled
+        required>
+        
+      </div>
+            <!-- Account no = accno
+            <div class="input-group mb-3">
+              <label for="acctype">Account No </label>
+              <select class="form-select" id="accno" name="accno" required>
+                {% for act in accDetails %}
+                <option value="{{act.account_no}}">{{ act.account_no}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <!-- loan Type = loan-type -->
+            <div class="input-group mb-3">
+              <label for="acctype">Loan Type </label>
+              <select
+                class="form-select"
+                id="loan_type"
+                name="loan_type"
+                required
+              > -->
+                {% for loan_type in loan_types %}
+                <option value="{{loan_type}}">{{ loan_type}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+                <b>Loan Amount : </b>
+                  <div class="input-group mb-3" id="input-wrapper">
+                    <div class="prefix">₹</div>
+                    <input
+                      class="form-control form-control-lg"
+                      type="number"
+                      placeholder="Enter amount to be debited"
+                      aria-label=".form-control-lg example"
+                      id="loan_amt"
+                      name='loan_amt'
+                      min='10'
+                      required
+                    />
+                  </div>
+          </div>
+          <br />
+          <div class="center">
+            <label for="check"><input type="checkbox" name="check" id="check" onchange="document.getElementById('button').disabled = !this.checked;" />I hereby certify and accept that the given info is accurate and correct and hereby accept to correctly and legally pay back the received ammount. </label>
+            
+            
+            <button type="submit" class="btn btn-success" name='button' id='button'>Login</button>
+
+            
+          </div>
+
+          <br />
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

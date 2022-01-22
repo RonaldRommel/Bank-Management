@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<br />
+<h2>Accounts</h2>
+<br />
+<div class="container">
+  <div class="row justify-content-between">
+    {% for account in accDetails %}
+    <div class="col-6" style="color: green">
+      <div class="account_card">
+        <div class="acc_in">
+          <h3>Account No : {{accDetails.index(account)+1}}</h3>
+          <div class="container">
+            <div><b>Account No </b>: {{account.account_no}}</div>
+            <div><b>Account Type </b>: {{account.account_type}}</div>
+            <div><b>Branch ID </b>: {{account.branch_id}}</div>
+            <div><b>Branch Name </b>: {{account.branch_name}}</div>
+            <div><b>Balance </b>: {{account.balance}}</div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

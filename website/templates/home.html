@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+
+<br />
+
+<div class="container">
+  <h2>Welcome {{details.name}}</h2>
+  <br />
+  <div>
+    <center>
+      <a href="/accounts"><button class="home_card">Accounts</button></a>
+      <a href="/credit"><button class="home_card">Credit</button></a>
+      <a href="/debit"><button class="home_card">Debit</button></a>
+    </center>
+  </div>
+  <br />
+  <div>
+    <center>
+      <a href="/transfer_funds"
+        ><button class="home_card">Transfer Funds</button></a
+      >
+      <a href="/loan"><button class="home_card">Loan</button></a>
+    </center>
+  </div>
+</div>
+
+{% endblock %}

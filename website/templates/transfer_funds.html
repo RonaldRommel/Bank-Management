@@ -1,0 +1,55 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+    <br />
+    <h2>Transfer Funds</h2>
+    <br />
+    <form method="post">
+      <div class="input-group mb-3">
+        <label for="acctype">Account No </label>
+        <select class="form-select" id="accno" name="accno" required>
+          {% for act in accDetails %}
+          <option value="{{act.account_no}}">{{ act.account_no}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <br />
+      <div>
+        <div class="form-group">
+          <!-- FullName var=fullName -->
+          <label for="Ben_accno">Beneficiary Account no</label>
+          <input
+            type="text"
+            class="form-control"
+            id="ben_accno"
+            name="ben_accno"
+            placeholder="Enter Beneficiary Account no"
+            maxlength="15"
+            minlength="15"
+            required
+          />
+        </div>
+        <br/>
+      <div>
+      Amount to be transfered :
+        <div class="input-group mb-3" id="input-wrapper">
+          <!-- <label for="acctype">Account No </label> -->
+          <div class="prefix">₹</div>
+          <input
+            class="form-control form-control-lg"
+            type="number"
+            placeholder="Enter amount to be transfered"
+            aria-label=".form-control-lg example"
+            id="tf_amt"
+            name='tf_amt'
+    
+          />
+        </div>
+        <br>
+        <div class="center">
+          <button type="submit" class="btn btn-success btn-lg">Submit</button>
+        </div>
+      </form>
+    </div>
+    
+    {% endblock %}
+    

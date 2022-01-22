@@ -1,0 +1,143 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
+content %}<!-- acctypes -->{% set acctypes=['Current account','Savings account
+','Salary account','Fixed deposit account','Recurring deposit account','NRI
+accounts'] %}<!-- gender -->{% set gender=['male','female','others'] %}
+<br />
+<div class="sign_card">
+  <h2>Sign Up</h2>
+  <form method="POST">
+    <div>
+      <div class="form-group">
+        <!-- FullName var=fullName -->
+        <label for="fullName">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="fullName"
+          name="fullName"
+          placeholder="Enter first name"
+          required
+        />
+      </div>
+      <!-- Phone Number var=phoneNumber -->
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="phoneNumber"
+          name="phoneNumber"
+          placeholder="Enter Phone Number"
+          required
+        />
+      </div>
+      <!-- Email Address var=email -->
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter email"
+          required
+        />
+      </div>
+      <!-- Password1 var=password1 -->
+      <div class="form-group">
+        <label for="password1">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password1"
+          name="password1"
+          placeholder="Enter password"
+          required
+        />
+      </div>
+      <!-- Password2 var=password2 -->
+      <div class="form-group">
+        <label for="password2">Password (Confirm)</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password2"
+          name="password2"
+          placeholder="Confirm password"
+          required
+        />
+      </div>
+      <!-- date of birth var=dob -->
+      <div class="form-group">
+        <label for="dob">Date Of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          id="dob"
+          name="dob"
+          max="2004-12-31"
+          required
+        />
+      </div>
+      <!-- Gender var=sex-->
+      <div class="input-group mb-3">
+        <label for="sex">Sex</label>
+        <select class="form-select" id="sex" name="sex" required>
+          {% for sex in gender %}
+          <option value="{{sex}}">{{sex}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <br />
+      <!-- Occupation var=occupation -->
+      <div class="form-group">
+        <label for="occupation">Occupation</label>
+        <input
+          type="text"
+          class="form-control"
+          id="occupation"
+          name="occupation"
+          placeholder="Enter your occupation"
+          required
+        />
+      </div>
+      <!-- Permanent address var=address -->
+      <div class="form-floating">
+        <label for="address">Permanent Address</label>
+        <textarea
+          class="form-control"
+          placeholder="Enter Permanent Address"
+          id="address"
+          name="address"
+          style="height: 100px"
+          required
+        ></textarea>
+      </div>
+      <br />
+      <!-- Account Type var=accType-->
+      <div class="input-group mb-3">
+        <label for="acctype">Account type</label>
+        <select class="form-select" id="acctype" name="acctype" required>
+          {% for acctype in acctypes %}
+          <option value="{{acctype}}">{{acctype}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <br />
+      <!-- Branch name var=bname-->
+      <div class="input-group mb-3">
+        <label for="bid">Select branch</label>
+        <select class="form-select" id="bid" name="bid" required>
+          {% for (bname,bid) in branches %}
+          <option value="{{bid}}">{{bname}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <br />
+      <div class="center">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
