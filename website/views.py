@@ -3,11 +3,18 @@ from flask.helpers import url_for
 from flask_login import login_required, current_user
 import json
 from . import mydb
-from .models import Customer,Account
+from .models import Customer,Account, Loan
+import pprint
+import random
 
 views = Blueprint('views', __name__)
 cur=mydb.cursor(dictionary=True)
 
+def getloanid():
+    loanid=0
+    for i in range(8):
+        loanid=loanid*10+random.randint(0,9)
+    return loanid
 # ----------- HOME -------------#c
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -15,23 +22,7 @@ def home():
     cur.execute('SELECT * FROM Customer where cust_id={}'.format(current_user.id))
     res=cur.fetchone()
     details=Customer(cust_id=res['cust_id'], name=res['name'], phone=res['phone'], address=res['address'], email=res['email'], password=res['password'], occupation=res['occupation'], sex=res['sex'], dob=res['dob'])
-    # if request.method == 'POST':
-    #     card_name=request.form.get('card')
-    #     if(card_name=='Accounts'):
-    #         return redirect(url_for('views.accounts'))        
         
-    #     elif(card_name=='Debit'):
-    #         return redirect(url_for('views.debit'))    
-        
-    #     elif(card_name=='Credit'):
-    #         return redirect(url_for('views.credit'))    
-        
-    #     elif(card_name=='Transfer Funds'):
-    #         return redirect(url_for('views.transfer_funds'))   
-        
-    #     elif(card_name=='Loan'):
-    #         return redirect(url_for('views.loan'))    
-         
     return render_template("home.html", user=current_user,details=details)
 
 # ----------- DEBIT -------------#
@@ -92,9 +83,18 @@ def credit():
 def accounts():
     cur.execute('SELECT * from account a,holdby h,branch b where b.branch_id=a.branch_id AND a.account_no=h.account_no AND h.cust_id={}'.format(current_user.id))
     accs=cur.fetchall()
+    
     accDetails=[]
     for acc in accs:
-        accDetails.append(Account(branch_name=acc['branch_name'],account_no=acc['account_no'], account_type=acc['account_type'], balance=acc['balance'], branch_id=acc['branch_id'], cust_id=acc['cust_id']))
+        cur.execute("Select * from loan l,availedby av where av.loan_id=l.loan_id AND av.account_no='{}'".format(acc['account_no']))
+        accdet=Account(branch_name=acc['branch_name'],account_no=acc['account_no'], account_type=acc['account_type'], balance=acc['balance'], branch_id=acc['branch_id'], cust_id=acc['cust_id'])
+        loans=cur.fetchone()
+        if(loans):
+            loandet=Loan(loan_type=loans['loan_type'],amount=loans['amount'])
+            accDetails.append([accdet,loandet])
+        else:
+            accDetails.append([accdet,Loan()])
+    
     return render_template("accounts.html", user=current_user,accDetails=accDetails)
     
 # ----------- Transfer Funds-------------#
@@ -138,13 +138,52 @@ def transfer_funds():
 @views.route('/loan', methods=['GET', 'POST'])
 @login_required
 def loan():
-    cur.execute('SELECT * from account a,holdby h,branch b,customer c where b.branch_id=a.branch_id AND a.account_no=h.account_no AND h.cust_id={}'.format(current_user.id))
+    
+    if request.method == 'POST':
+        accno=request.form.get('accno')
+        custid=current_user.id
+        loanid=getloanid()
+        loan_type=request.form.get('loan_type')
+        loan_amt=request.form.get('loan_amt')
+        cur.execute("Select * from availedby where account_no='{}'".format(accno))
+        exist=cur.fetchone()
+        if exist:
+            flash("Outstanding loan!",category='error')
+            return redirect(url_for('views.home'))
+        cur.execute("SELECT branch_id from account where account_no='{}'".format(accno))
+        branchid=cur.fetchone()['branch_id']
+        cur.execute(r"INSERT into loan values({},'{}',{},{})".format(loanid, loan_type, loan_amt, branchid))
+        cur.execute(r"INSERT into availedby values({},'{}')".format(loanid,accno))
+        mydb.commit()
+        flash("Loan request of ₹{} successful ".format(loan_amt),category='success')
+        return redirect(url_for('views.home'))
+        
+    cur.execute('SELECT * from account a,holdby h,customer c where h.cust_id=c.cust_id AND a.account_no=h.account_no AND h.cust_id={}'.format(current_user.id))
     accs=cur.fetchall()
     accDetails=[]
     for acc in accs:
-        accDetails.append([Account(branch_name=acc['branch_name'],account_no=acc['account_no'], account_type=acc['account_type'], balance=acc['balance'], branch_id=acc['branch_id'], cust_id=acc['cust_id']),
+        accDetails.append([Account(account_no=acc['account_no'], account_type=acc['account_type'], balance=acc['balance'], branch_id=acc['branch_id'], cust_id=acc['cust_id']),
                            Customer(name=acc['name'],email=acc['email'],address=acc['address'],phone=acc['phone'],dob=acc['dob'],sex=acc['sex'],occupation=acc['occupation'])])
-    f=open("output.txt",'w')
-    f.write("{}".format((accDetails[0][1]).address))
-    f.close()
+    
     return render_template("loan.html", user=current_user,accDetails=accDetails)
+
+@views.route('/account_settings', methods=['GET', 'POST'])
+@login_required
+def account_settings():
+    if request.method == 'POST' :
+        fullName=request.form.get('fullName')
+        phoneNumber=request.form.get('phoneNumber')
+        email=request.form.get('email')
+        dob= request.form.get('dob')
+        sex = request.form.get('sex')
+        occupation = request.form.get('occupation')
+        address = request.form.get('address')
+        cur.execute("update Customer set name='{}',phone='{}',email='{}',dob='{}',sex='{}',occupation='{}',address='{}' ".format(fullName,phoneNumber,email,dob,sex,occupation,address))
+        mydb.commit()
+        flash("Saved Changes",category='success')
+        return redirect(url_for('views.home')) 
+    
+    cur.execute("Select * from Customer where cust_id='{}'".format(current_user.id))
+    accdetails=cur.fetchone()
+    accdetails=Customer(name=accdetails['name'],phone=accdetails['phone'],address=accdetails['address'],email=accdetails['email'],occupation=accdetails['occupation'],sex=accdetails['sex'],dob=accdetails['dob'])
+    return render_template("account_settings.html", user=current_user,accdetails=accdetails)

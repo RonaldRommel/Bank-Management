@@ -17,23 +17,22 @@ class User(UserMixin):
         self.password = password
         
 class Bank():
-    def __init__(self,bank_name,bank_address,bank_code):
+    def __init__(self,bank_name=None,bank_address=None,bank_code=None):
         self.bank_code = bank_code
         self.bank_name = bank_name
         self.bank_address = bank_address
            
 class Branch():
-    def __init__(self,branch_name,branch_address,branch_id):
+    def __init__(self,branch_name=None,branch_address=None,branch_id=None):
         self.brackage_name = branch_name
         self.branch_id = branch_id
         self.branch_address = branch_address
 
       
 class Loan():
-    def __init__(self,loan_type,amount,branch_id):
+    def __init__(self,loan_type=None,amount=None):
         self.loan_type = loan_type
         self.amount = amount
-        self.branch_id=branch_id
 
 class Account():
     def __init__(self,account_type=None,balance=None,branch_id=None,account_no=None,cust_id=None,branch_name=None):
@@ -57,17 +56,17 @@ class Customer():
         self.dob=dob
     
 class Has():
-    def __init__(self,bank_code,branch_id):
+    def __init__(self,bank_code=None,branch_id=None):
         self.bank_code = bank_code
         self.branch_id = branch_id
         
 class AvailedBy():
-    def __init__(self,cust_id,loan_id):
+    def __init__(self,cust_id=None,loan_id=None):
         self.cust_id = cust_id
         self.loan_id = loan_id
     
 class HoldBy():
-    def __init__(self,account_no,cust_id):
+    def __init__(self,account_no=None,cust_id=None):
         self.account_no= account_no
         self.cust_id = cust_id
 

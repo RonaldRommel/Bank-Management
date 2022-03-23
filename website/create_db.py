@@ -11,7 +11,7 @@ mydb=mysql.connector.connect(
         host='localhost',
         user='root',
         passwd='dbmsproject01', # root_password
-        database="bankapp",     # database_name
+        database="bankap",     # database_name
 )
 
 cur=mydb.cursor()

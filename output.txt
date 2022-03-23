@@ -1,1 +1,1 @@
-7th street Bangalore
+[]0[]0[]0[{'loan_id': 64612656, 'loan_type': 'Two-Wheeler Loans', 'amount': 90000, 'branch_id': 5, 'account_no': '89bdbb7b81d811e'}]1

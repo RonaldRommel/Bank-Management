@@ -132,3 +132,140 @@ input {
   font-weight: bold;
   display: inline-block;
 }
+
+@media print {
+  .logo {
+    height: 8vh;
+    width: 8vh;
+    border-radius: 10px;
+  }
+  .navbar {
+    background-color: #327c38;
+    color: aliceblue;
+  }
+
+  .login_card {
+    max-width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* border: 1px solid; */
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0px 1px 20px grey;
+  }
+  .login_card h2 {
+    text-align: center;
+    padding: 20px 0px 20px 0px;
+    border-bottom: 1px solid;
+    background-color: #327c38;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+    /* width: 300px; */
+  }
+  .login_card form {
+    padding: 20px 40px;
+  }
+  .login_card label {
+    font-weight: bold;
+  }
+  .center {
+    text-align: center;
+  }
+  input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  .input-group label {
+    padding: 0px 15px 0px 0px;
+  }
+  .sign_card {
+    /* border: 1px solid; */
+    border-radius: 10px;
+    box-shadow: 0px 1px 20px grey;
+  }
+  .sign_card h2 {
+    text-align: center;
+    padding: 20px 0px 20px 0px;
+    border-bottom: 1px solid;
+    background-color: #327c38;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+    /* width: 300px; */
+  }
+  .sign_card form {
+    padding: 20px 40px;
+  }
+  .sign_card label {
+    font-weight: bold;
+  }
+  .home_card {
+    background-color: #e8e8e8;
+    height: 14vw;
+    width: 14vw;
+    border-radius: 8px;
+    border: none;
+    transition-duration: 0.4s;
+  }
+  .home_card:hover {
+    background-color: #f8f8f8;
+    border: 0px solid transparent;
+  }
+
+  #input-wrapper {
+    display: flex;
+    margin: 10px 0px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    border: 1px solid #7b7b93;
+    font-size: 20px;
+    font-weight: bold;
+    color: grey;
+  }
+  .prefix {
+    position: relative;
+    padding: 15px 0px 15px 15px;
+  }
+  #input-wrapper input {
+    border: 0px;
+  }
+  #input-wrapper input:focus {
+    border: 0px;
+    outline: 0;
+    box-shadow: none;
+  }
+
+  .account_card {
+    margin: 20px;
+    /* max-width: 400px; */
+    /* position: absolute; */
+    /* top: 50%;
+  left: 50%; */
+    /* border: 1px solid; */
+    /* transform: translate(-50%, -50%); */
+    border-radius: 10px;
+    box-shadow: 0px 1px 20px grey;
+  }
+  .account_card h3 {
+    text-align: center;
+    padding: 20px 0px 20px 0px;
+    border-bottom: 1px solid;
+    background-color: #327c38;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+    /* width: 300px; */
+  }
+  .account_card .acc_in {
+    padding: 0px 0px;
+    color: black;
+    font-size: 20px;
+  }
+  .account_card label {
+    font-weight: bold;
+    display: inline-block;
+  }
+}
